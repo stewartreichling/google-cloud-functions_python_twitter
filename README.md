@@ -26,7 +26,7 @@ Cloud Console.
 To deploy using `gcloud`:
 
 ```console
-gcloud beta functions deploy my_twitter_function --trigger-http --entry-point 
+$ gcloud beta functions deploy my_twitter_function --trigger-http --entry-point 
 getTweets --runtime python37
 ```
 
