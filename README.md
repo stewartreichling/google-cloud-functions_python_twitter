@@ -31,10 +31,18 @@ $ gcloud beta functions deploy my_twitter_function --trigger-http --entry-point 
 
 ## Testing your deployed function
 
-Test your function using a tool like `curl`:
+Test your function using a tool like `curl`.
+
+First, get your function's URL:
 
 ```console
-$ curl -d '{"keyword":"google"}' -H "Content-Type: application/json" -X POST https://us-central1-gcf-runtime-testing.cloudfunctions.net/my_twitter_function
+$ YOUR_HTTP_TRIGGER_URL=$(gcloud functions describe my_twitter_function --format='value(httpsTrigger.url)')
+```
+
+Then send a POST request to your function using `curl`:
+
+```console
+$ curl -d '{"keyword":"google"}' -H "Content-Type: application/json" -X POST $YOUR_HTTP_TRIGGER_URL
 ```
 
 ## Testing your function locally
