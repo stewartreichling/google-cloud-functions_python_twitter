@@ -1,3 +1,4 @@
+"""A function that shows use of the Twitter API client."""
 import flask
 import twitter
 
@@ -17,9 +18,10 @@ api = twitter.Api(
     access_token_secret=access_token_secret)
 
 
-def getTweets(request):
+def entrypoint(request):
     """ Resonds to an HTTP POST request containing a keyword used to query
     the Twitter API. Outputs tweets matching the keyword.
+
     Args:
         request (flask.Request): The request object containing POST data
     Returns:
