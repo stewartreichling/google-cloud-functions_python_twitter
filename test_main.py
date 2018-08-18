@@ -1,5 +1,5 @@
 from flask import Flask, request
-from main import getTweets
+from main import entrypoint
 
 
 app = Flask(__name__)
@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['POST'])
 def invoke_user_function():
-    return getTweets(request)
+    return entrypoint(request)
 
 
 if __name__ == '__main__':
