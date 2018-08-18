@@ -1,0 +1,4 @@
+#!/bin/bash
+
+HTTPS_TRIGGER_URL=$(gcloud beta functions describe twitter_client --format='value(httpsTrigger.url)')
+curl -d '{"keyword":"cats"}' -H "Content-Type: application/json" -X POST $HTTPS_TRIGGER_URL
