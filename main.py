@@ -19,7 +19,9 @@ api = twitter.Api(
 
 
 def entrypoint(request):
-    """ Resonds to an HTTP POST request containing a keyword used to query
+    """Find tweets matching a keyword.
+    
+    Responds to an HTTP POST request containing a keyword used to query
     the Twitter API. Outputs tweets matching the keyword.
 
     Args:
@@ -27,7 +29,6 @@ def entrypoint(request):
     Returns:
         tweets (str): JSON-ified representation of tweets matching the query
     """
-
     # Check the request method. This function only accepts POST but this can
     # be changed to suit your needs
     if request.method != 'POST':
@@ -42,7 +43,7 @@ def entrypoint(request):
         keyword = data['keyword']
         query = (f'q={keyword}'
                  ' -Athletics, -Sports, -Basketball, -Football&count=100')
-        result = api.GetSearch(raw_query=query) 
+        result = api.GetSearch(raw_query=query)
 
         # Convert results to a list of (tweet id, tweet text)
         output = [(tweet.id, tweet.text) for tweet in result]
