@@ -1,59 +1,42 @@
-# Example usage of Twitter API on Google Cloud Functions
+# Using the Twitter API client with Google Cloud Functions
 
 ## Overview
 
-This sample demonstrates use of the Twitter API in a Google Cloud Function
-using the Python 3.7 runtime. It also contains a helper script that you might
-find useful for local development.
+This sample demonstrates use of the Twitter API client with Google Cloud
+Functions on the Python 3.7 runtime.
 
-When you deploy your function, it must contain the following two files:
+## Set up your local development environment
 
-**Required**
+### Pre-requisites
+* The Python 3.7 interpreter
+* `pip`
+* `virtualenv`
+* `curl`
+* Developer credentials for the Twitter API
+* The `gcloud` command-line tool
 
-* `main.py` contains your function code
-* `requirements.txt` contains your function's dependencies
-
-**Optional**
-
-* `test.py` is a helper script for local development
-
-## Deploying your function
-
-You can use the `gcloud` tool in a shell to deploy your function. Alternatively,
-you can paste the code from `main.py` and `requirements.txt` into the Google
-Cloud Console.
-
-To deploy using `gcloud`:
-
+### Create and activate a virtual environment
+Use `virtualenv` to create a python3 virtual environment:
 ```console
-$ gcloud beta functions deploy my_twitter_function --trigger-http --entry-point getTweets --runtime python37
+$ virtualenv --python python3 env
 ```
 
-## Testing your deployed function
-
-Test your function using a tool like `curl`.
-
-First, get your function's URL:
-
+Activate your newly-created virtual environment:
 ```console
-$ YOUR_HTTP_TRIGGER_URL=$(gcloud functions describe my_twitter_function --format='value(httpsTrigger.url)')
+$ source env/bin/activate
 ```
 
-Then send a POST request to your function using `curl`:
-
+### Install dependencies
+Use `pip` to install project dependencies:
 ```console
-$ curl -d '{"keyword":"google"}' -H "Content-Type: application/json" -X POST $YOUR_HTTP_TRIGGER_URL
+pip install -r requirements.txt
 ```
 
-## Testing your function locally
-
-Set up a virtual environment that uses Python 3 and has the dependencies listed
-in `requirements.txt`.
-
-Next, launch the test script:
-
+## Run locally
+Execute the `bin/test-local` script to run your function locally using Flask's
+local development server:
 ```console
-$ python test.py
+$ bash bin/test-local
  * Serving Flask app "test" (lazy loading)
  * Environment: production
    WARNING: Do not use the development server in a production environment.
@@ -65,16 +48,27 @@ $ python test.py
  * Debugger PIN: 185-903-498
 ```
 
-Your function is now running locally using Flask's local development server.
-
-Send a test query to your local function using `curl`:
-
+Now open another shell and use `curl` to send a query to your local function:
 ```console
-$ curl -d '{"keyword":"google"}' -H "Content-Type: application/json" -X POST 
-http://127.0.0.1:8080
+$ curl -d '{"keyword":"cats"}' -H "Content-Type: application/json" -X POST http://127.0.0.1:8080
 ```
 
-## Author
+## Deploy your function
+Execute the `bin/test-local` script to deploy a function named `twitter_client`
+using `gcloud`:
 
-stewart.reichling@gmail.com
+```console
+$ bash bin/deploy
+Deploying function (may take a while - up to 2 minutes)...done.
+```
 
+Alternatively, you can paste the code from `main.py` and `requirements.txt`
+into the Google Cloud Console.
+
+## Test your deployed function
+Execute the `bin/test-deployed` script to send an HTTP request to your deployed
+function:
+
+```console
+$ bash bin/test-deployed
+```
